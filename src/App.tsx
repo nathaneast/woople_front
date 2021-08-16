@@ -1,20 +1,20 @@
-import { RecoilRoot, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
-import { user } from "./atom";
+import { user } from './atom';
 import Header from './component/Header';
+import Category from './component/Category';
+import ItemList from './component/ItemList';
 
 function App() {
-  // const userName: string = useRecoilValue(user);
-  // console.log({userName})
+  const userName: string = useRecoilValue(user);
+  console.log(userName, 'app');
 
   return (
-    <RecoilRoot>
-      <div className="App">
-        <Header />
-        <div>카테고리</div>
-        <div>목록 렌더링</div>
-      </div>
-    </RecoilRoot>
+    <div className="App">
+      <Header userName={userName} />
+      <Category />
+      <ItemList userName={userName} />
+    </div>
   );
 }
 
