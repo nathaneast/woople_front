@@ -3,15 +3,6 @@ import { useSetRecoilState } from 'recoil';
 
 import { itemList } from '../atom';
 
-const mockData = [
-  {
-    image: 'image',
-    url: 'https://www.naver.com',
-    title: 'mock title',
-    desc: 'mock desc',
-  },
-];
-
 const Category = () => {
   const [currentCategory, setCurrentCategory] = useState('all');
   const setItemList = useSetRecoilState(itemList);
@@ -29,7 +20,10 @@ const Category = () => {
   const onFetchItemList = useCallback(() => {
     // TODO: api 요청
 
-    setItemList((prevList) => [...prevList]);
+    // setItemList((prevList) => [...prevList]);
+    setItemList((prevList) => [
+      ...prevList,
+    ]);
   }, [setItemList]);
 
   useEffect(() => {
