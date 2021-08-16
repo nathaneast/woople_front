@@ -1,25 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { RecoilRoot, useRecoilValue } from 'recoil';
+
+import { user } from "./atom";
+import Header from './component/Header';
 
 function App() {
+  // const userName: string = useRecoilValue(user);
+  // console.log({userName})
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RecoilRoot>
+      <div className="App">
+        <Header />
+        <div>카테고리</div>
+        <div>목록 렌더링</div>
+      </div>
+    </RecoilRoot>
   );
 }
 
