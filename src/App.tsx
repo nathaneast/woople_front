@@ -1,20 +1,27 @@
 import { useRecoilValue } from 'recoil';
 
-import { user } from './atom';
+import { userState } from './atom/index';
 import Header from './component/Header';
 import Category from './component/Category';
 import ItemList from './component/ItemList';
+import Login from './component/Login';
 
 function App() {
-  const userName: string = useRecoilValue(user);
-  console.log(userName, 'app');
+  const { name: userName, isLogIn } = useRecoilValue(userState);
+  console.log({ userName, isLogIn });
 
   return (
-    <div className="App">
-      <Header userName={userName} />
-      <Category />
-      <ItemList userName={userName} />
-    </div>
+    <>
+      {isLogIn ? (
+        <div>
+          <Header userName={userName} />
+          <Category />
+          <ItemList />
+        </div>
+      ) : (
+        <Login />
+      )}
+    </>
   );
 }
 

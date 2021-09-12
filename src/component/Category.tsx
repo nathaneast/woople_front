@@ -1,36 +1,34 @@
-import { useEffect, useState, useCallback } from 'react';
-import { useSetRecoilState } from 'recoil';
-
-import { itemList } from '../atom';
+import { useCallback } from 'react';
+import { useRecoilState } from 'recoil';
+import { categoryState } from "../atom";
 
 const Category = () => {
-  const [currentCategory, setCurrentCategory] = useState('all');
-  const setItemList = useSetRecoilState(itemList);
+  const [category, setCategory] = useRecoilState(categoryState)
 
   const onClickCategory = useCallback((e) => {
     if (e.target.tagName === 'LI') {
       const targetCategory = e.target.dataset.name;
 
-      if (currentCategory !== targetCategory) {
-        setCurrentCategory(targetCategory);
+      if (category !== targetCategory) {
+        setCategory(targetCategory);
       }
     }
-  }, [currentCategory]);
+  }, [category, setCategory]);
 
-  const onFetchItemList = useCallback(() => {
-    // TODO: api 요청
+  // const onFetchItemList = useCallback(() => {
+  //   // TODO: api 요청
 
-    // setItemList((prevList) => [...prevList]);
-    setItemList((prevList) => [
-      ...prevList,
-    ]);
-  }, [setItemList]);
+  //   // setItemList((prevList) => [...prevList]);
+  //   setItemList((prevList) => [
+  //     ...prevList,
+  //   ]);
+  // }, [setItemList]);
 
-  useEffect(() => {
-    onFetchItemList();
-  }, [currentCategory, onFetchItemList]);
+  // useEffect(() => {
+  //   onFetchItemList();
+  // }, [currentCategory, onFetchItemList]);
 
-  console.log(currentCategory, 'category');
+  console.log({ category });
 
   return (
     <section>
