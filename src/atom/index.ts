@@ -1,41 +1,5 @@
 import { atom } from 'recoil';
 
-const itemListMockData: any = [
-  {
-    key: 1,
-    id: "jonadan@google.com",
-    author: 'jonandan',
-    date: '2021-09-09',
-    like: 13,
-    redirectUrl: 'https://www.naver.com',
-    title: 'mock title',
-    imagePath: 'imageUrl',
-    desc: 'mock desc',
-  },
-  {
-    key: 2,
-    id: "jonadan@google.com",
-    author: 'jonandan',
-    date: '2021-09-09',
-    like: 13,
-    redirectUrl: 'https://www.naver.com',
-    title: 'mock title',
-    imagePath: 'imageUrl',
-    desc: 'mock desc',
-  },
-  {
-    key: 3,
-    id: "jonadan@google.com",
-    author: 'jonandan',
-    date: '2021-09-09',
-    like: 13,
-    redirectUrl: 'https://www.naver.com',
-    title: 'mock title',
-    imagePath: 'imageUrl',
-    desc: 'mock desc',
-  },
-];
-
 // export const userState = atom({
 //   key: 'user',
 //   default: {
@@ -47,7 +11,7 @@ const itemListMockData: any = [
 
 export const itemListState = atom({
   key: 'itemList',
-  default: itemListMockData,
+  default: [],
 });
 
 export const categoryState = atom({

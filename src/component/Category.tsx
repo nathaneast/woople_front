@@ -1,12 +1,12 @@
-import { useCallback, ReactElement } from 'react';
+import { useCallback } from 'react';
 
 
-interface CategoryProps {
+interface Props {
   category: string,
   setCategory: (val: string) => void,
 };
 
-const Category = ({ category, setCategory} : CategoryProps): ReactElement => {
+function Category ({ category, setCategory } : Props) {
   const onClickCategory = useCallback((e) => {
     if (e.target.tagName === 'LI') {
       const targetCategory = e.target.dataset.name;

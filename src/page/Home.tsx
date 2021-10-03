@@ -4,7 +4,7 @@ import Category from '../component/Category';
 import Header from '../component/Header';
 import ItemList from '../component/ItemList';
 
-const Home = () => {
+function Home (){
   const [category, setCategory] = useState("all");
 
   return (
@@ -14,7 +14,9 @@ const Home = () => {
         category={category}
         setCategory={setCategory}
       />
-      <ItemList />
+      <ItemList 
+        category={category}
+      />
     </>
   );
 };
