@@ -36,14 +36,14 @@ const itemListMockData: any = [
   },
 ];
 
-export const userState = atom({
-  key: 'user',
-  default: {
-    id: 'jonadan@google.com',
-    name: 'jonadan',
-    isLogIn: true,
-  },
-});
+// export const userState = atom({
+//   key: 'user',
+//   default: {
+//     id: 'jonadan@google.com',
+//     name: 'jonadan',
+//     isLogIn: true,
+//   },
+// });
 
 export const itemListState = atom({
   key: 'itemList',
