@@ -1,7 +1,8 @@
-import { Dispatch, SetStateAction, useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 // import { useBool } from '../hooks'; 
 
+// import ItemDetailCard from './ItemDetailCard';
 import ItemCard from './ItemCard';
 
 const itemListMockData: any = [
@@ -10,6 +11,7 @@ const itemListMockData: any = [
     // id: "jonadan@google.com",
     author: 'jonandan',
     date: '2021-09-09',
+    category: 'morning',
     // like: 13,
     redirectUrl: 'https://www.naver.com',
     title: 'mock title',
@@ -21,6 +23,7 @@ const itemListMockData: any = [
     // id: "jonadan@google.com",
     author: 'jonandan',
     date: '2021-09-09',
+    category: 'morning',
     // like: 13,
     redirectUrl: 'https://www.naver.com',
     title: 'mock title',
@@ -32,6 +35,7 @@ const itemListMockData: any = [
     // id: "jonadan@google.com",
     author: 'jonandan',
     date: '2021-09-09',
+    category: 'night',
     // like: 13,
     redirectUrl: 'https://www.naver.com',
     title: 'mock title',
@@ -54,6 +58,7 @@ interface ItemProps {
   title: string;
   imagePath: string;
   desc: string;
+  category: string;
 };
 
 interface Props {
@@ -67,7 +72,7 @@ function ItemList ({ category } : Props) {
   //TODO: useBoll ts적용
   const [isShowDetailModal, setIsShowDetailModal] = useState(false);
 
-  const onHandleDetailMdoal = useCallback((isOnModal: boolean, contentsKey: number | null) => {
+  const onHandleDetailModal = useCallback((isOnModal: boolean, contentsKey: number | null) => {
     setIsShowDetailModal(isOnModal);
     isOnModal && typeof contentsKey === 'number' ? setContentsDetail(contentsList[contentsKey]) : setContentsDetail(null);
   }, [setIsShowDetailModal, contentsList, setContentsDetail]);
@@ -76,20 +81,34 @@ function ItemList ({ category } : Props) {
     setContentsList(itemListMockData);
   }, [category]);
 
+  console.log({contentsDetail, isShowDetailModal})
+
   return (
   <main>
     {contentsList.length && contentsList.map((item: ItemProps, index: number) => (
       <ItemCard 
-      key={item.key}
-      index={index}
-      author={item.author}
-      date={item.date}
-      redirectUrl={item.redirectUrl}
-      title={item.title}
-      imagePath={item.imagePath}
-      desc={item.desc}
-      onShowItemDetail={onHandleDetailMdoal}
+        key={item.key}
+        index={index}
+        title={item.title}
+        author={item.author}
+        desc={item.desc}
+        onShowItemDetail={onHandleDetailModal}
+        redirectUrl={item.redirectUrl}
+        imagePath={item.imagePath}
       />
+
+      // <ItemDetailCard 
+      // key={item.key}
+      // index={index}
+      // author={item.author}
+      // date={item.date}
+      // redirectUrl={item.redirectUrl}
+      // title={item.title}
+      // imagePath={item.imagePath}
+      // desc={item.desc}
+      // category={item.category}
+      // onShowItemDetail={onHandleDetailModal}
+      // />
     ))}
   </main>
   );

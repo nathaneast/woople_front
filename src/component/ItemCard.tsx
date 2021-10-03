@@ -1,27 +1,47 @@
-import { useEffect, useState, useCallback, ReactElement } from 'react';
-
 interface Props {
   index: number;
-  author: string;
-  date: string;
-  redirectUrl: string;
   title: string;
-  imagePath: string;
   desc: string;
-  onShowItemDetail: (isOnModal: boolean, contentsKey: number | null) => void,
+  author: string;
+  redirectUrl: string;
+  imagePath: string;
+  onShowItemDetail: (isOnModal: boolean, contentsKey: number | null) => void;
 }
 
-function ItemCard({
-  index,
-  author,
-  date,
-  redirectUrl,
-  title,
-  imagePath,
-  desc,
-  onShowItemDetail
-}: Props) {
-  return <article onClick={() => onShowItemDetail(true, index)}>ItemCard</article>;
+function ItemCard({ index, title, author, desc, imagePath, redirectUrl, onShowItemDetail }: Props) {
+  return (
+    <article onClick={() => onShowItemDetail(true, index)}>
+      <section>
+        mock image
+        <div
+          style={{ width: '200px', height: '200px', backgroundColor: 'green' }}
+        ></div>
+      </section>
+
+      <section>
+        <div>
+          <label>타이틀</label>
+          <p>{title}</p>
+        </div>
+        <div>
+          <label>설명</label>
+          <p>{desc}</p>
+        </div>
+        <div>
+          <label>작성자</label>
+          <p>{author}</p>
+        </div>
+      </section>
+
+      <section>
+        <button>
+          <a href={redirectUrl} target="_blank" rel="noopner noreferrer">
+            링크이동
+          </a>
+        </button>
+      </section>
+    </article>
+  );
 }
 
 export default ItemCard;
