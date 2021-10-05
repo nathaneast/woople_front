@@ -10,7 +10,7 @@ interface Props {
 
 function ItemCard({ index, title, author, desc, imagePath, redirectUrl, onShowItemDetail }: Props) {
   return (
-    <article onClick={() => onShowItemDetail(true, index)}>
+    <article>
       <section>
         mock image
         <div
@@ -34,10 +34,8 @@ function ItemCard({ index, title, author, desc, imagePath, redirectUrl, onShowIt
       </section>
 
       <section>
-        <button>
-          <a href={redirectUrl} target="_blank" rel="noopner noreferrer">
-            링크이동
-          </a>
+        <button onClick={() => onShowItemDetail(true, index)}>
+          상세보기
         </button>
       </section>
     </article>

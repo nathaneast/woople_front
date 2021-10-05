@@ -1,9 +1,10 @@
 import { useEffect, useState, useCallback } from 'react';
 
-// import { useBool } from '../hooks'; 
+// import { useBool } from '../hooks';
 
 // import ItemDetailCard from './ItemDetailCard';
 import ItemCard from './ItemCard';
+import ItemDetailCard from './ItemDetailCard';
 
 const itemListMockData: any = [
   {
@@ -59,59 +60,66 @@ interface ItemProps {
   imagePath: string;
   desc: string;
   category: string;
-};
+}
 
 interface Props {
-  category: string,
-};
+  category: string;
+}
 
-function ItemList ({ category } : Props) {
+function ItemList({ category }: Props) {
   const [contentsList, setContentsList] = useState([]);
-  const [contentsDetail, setContentsDetail] = useState(null);
+  const [contentsDetail, setContentsDetail] = useState({});
 
   //TODO: useBoll ts적용
   const [isShowDetailModal, setIsShowDetailModal] = useState(false);
 
-  const onHandleDetailModal = useCallback((isOnModal: boolean, contentsKey: number | null) => {
-    setIsShowDetailModal(isOnModal);
-    isOnModal && typeof contentsKey === 'number' ? setContentsDetail(contentsList[contentsKey]) : setContentsDetail(null);
-  }, [setIsShowDetailModal, contentsList, setContentsDetail]);
+  const onHandleDetailModal = useCallback(
+    (isOnModal: boolean, contentsKey: number | null) => {
+      setIsShowDetailModal(isOnModal);
+      isOnModal && typeof contentsKey === 'number'
+        ? setContentsDetail(contentsList[contentsKey])
+        : setContentsDetail(null);
+    },
+    [setIsShowDetailModal, contentsList, setContentsDetail],
+  );
 
   useEffect(() => {
     setContentsList(itemListMockData);
   }, [category]);
 
-  console.log({contentsDetail, isShowDetailModal})
+  console.log({ contentsDetail, isShowDetailModal });
 
   return (
-  <main>
-    {contentsList.length && contentsList.map((item: ItemProps, index: number) => (
-      <ItemCard 
-        key={item.key}
-        index={index}
-        title={item.title}
-        author={item.author}
-        desc={item.desc}
-        onShowItemDetail={onHandleDetailModal}
-        redirectUrl={item.redirectUrl}
-        imagePath={item.imagePath}
-      />
+    <main>
+      {contentsList.length &&
+        contentsList.map((item: ItemProps, index: number) => (
+          <ItemCard
+            key={item.key}
+            index={index}
+            title={item.title}
+            author={item.author}
+            desc={item.desc}
+            onShowItemDetail={onHandleDetailModal}
+            redirectUrl={item.redirectUrl}
+            imagePath={item.imagePath}
+          />
+        ))}
 
-      // <ItemDetailCard 
-      // key={item.key}
-      // index={index}
-      // author={item.author}
-      // date={item.date}
-      // redirectUrl={item.redirectUrl}
-      // title={item.title}
-      // imagePath={item.imagePath}
-      // desc={item.desc}
-      // category={item.category}
-      // onShowItemDetail={onHandleDetailModal}
-      // />
-    ))}
-  </main>
+      {isShowDetailModal && contentsDetail &&(
+        <ItemDetailCard
+          show={isShowDetailModal}
+          author={contentsDetail.author}
+          date={contentsDetail.date}
+          redirectUrl={contentsDetail.redirectUrl}
+          title={contentsDetail.title}
+          imagePath={contentsDetail.imagePath}
+          desc={contentsDetail.desc}
+          category={contentsDetail.category}
+          onHide={onHandleDetailModal}
+        />
+      )}
+    </main>
   );
-};
+}
 
 export default ItemList;
