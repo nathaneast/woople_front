@@ -26,7 +26,7 @@ function ItemDetailCard({
   onHide,
 }: Props) {
   return (
-    <Modal show={show} onHide={() => onHide(false, null)}>
+    <Modal show={show} onHide={() => onHide(false, null)} animation={false}>
       <Modal.Header closeButton>
         <Modal.Title>Modal heading</Modal.Title>
       </Modal.Header>
@@ -68,7 +68,7 @@ function ItemDetailCard({
 
       <Modal.Footer>
         <Button variant="primary">
-          <a href={redirectUrl} target="_blank" rel="noopner noreferrer">
+          <a href={redirectUrl} target="_blank" rel="noopner noreferrer" style={{ color: "black"}}>
             링크이동
           </a>
         </Button>

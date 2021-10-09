@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 
 // import { useBool } from '../hooks';
 
@@ -45,12 +45,6 @@ const itemListMockData: any = [
   },
 ];
 
-// type ShowDetail = [boolean, () => void, (value: boolean) => void];
-
-// interface ShowDetailType {
-//   (val: boolean): ShowDetail
-// };
-
 interface ItemProps {
   key: number;
   author: string;
@@ -67,8 +61,19 @@ interface Props {
 }
 
 function ItemList({ category }: Props) {
+  const contentsDetailDefault = useMemo(() => ({
+      key: 0,
+      author: '',
+      date: '',
+      redirectUrl: '',
+      title: '',
+      imagePath: '',
+      desc: '',
+      category: '',
+    }), []);
+
   const [contentsList, setContentsList] = useState([]);
-  const [contentsDetail, setContentsDetail] = useState({});
+  const [contentsDetail, setContentsDetail] = useState(contentsDetailDefault);
 
   //TODO: useBoll ts적용
   const [isShowDetailModal, setIsShowDetailModal] = useState(false);
@@ -76,13 +81,17 @@ function ItemList({ category }: Props) {
   const onHandleDetailModal = useCallback(
     (isOnModal: boolean, contentsKey: number | null) => {
       setIsShowDetailModal(isOnModal);
-      isOnModal && typeof contentsKey === 'number'
-        ? setContentsDetail(contentsList[contentsKey])
-        : setContentsDetail(null);
+
+      if (isOnModal && typeof contentsKey === 'number') {
+        setContentsDetail(contentsList[contentsKey]);
+      } else {
+        setContentsDetail(contentsDetailDefault);
+      }
     },
-    [setIsShowDetailModal, contentsList, setContentsDetail],
+    [setIsShowDetailModal, contentsList, setContentsDetail, contentsDetailDefault],
   );
 
+  // TODO: 아이템리스트 요청
   useEffect(() => {
     setContentsList(itemListMockData);
   }, [category]);
@@ -105,7 +114,7 @@ function ItemList({ category }: Props) {
           />
         ))}
 
-      {isShowDetailModal && contentsDetail &&(
+      {isShowDetailModal && contentsDetail && (
         <ItemDetailCard
           show={isShowDetailModal}
           author={contentsDetail.author}
