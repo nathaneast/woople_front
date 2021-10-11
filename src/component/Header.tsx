@@ -1,15 +1,15 @@
 interface Props {
-  onHandleItemForm: any;
+  toggleItemForm: any;
 }
 
-const Header = ({ onHandleItemForm }: Props) => {
+const Header = ({ toggleItemForm }: Props) => {
   return (
     <header>
       <div>
         <h1>WOOPLE</h1>
       </div>
       <ul>
-        <li onClick={onHandleItemForm}>글쓰기</li>
+        <li onClick={toggleItemForm}>글쓰기</li>
       </ul>
     </header>
   );

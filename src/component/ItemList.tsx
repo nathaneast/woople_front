@@ -59,11 +59,10 @@ interface ItemProps {
 interface Props {
   category: string;
   isShowItemForm: boolean;
-  onHandleItemForm: () => void;
+  toggleItemForm: () => void;
 }
 
-function ItemList({ category, isShowItemForm, onHandleItemForm }: Props) {
-  // FIXME: 디테일 빈값 대신 상태지정 방법 고려
+function ItemList({ category, isShowItemForm, toggleItemForm }: Props) {
   const contentsDetailDefault = useMemo(() => ({
       key: 0,
       author: '',
@@ -74,11 +73,9 @@ function ItemList({ category, isShowItemForm, onHandleItemForm }: Props) {
       desc: '',
       category: '',
     }), []);
-
   const [contentsList, setContentsList] = useState([]);
   const [contentsDetail, setContentsDetail] = useState(contentsDetailDefault);
 
-  //TODO: useBoll ts적용
   const [isShowDetailModal, toggleDetailModal] = useToggle(false);
 
   const onHandleDetailModal = useCallback(
@@ -130,7 +127,7 @@ function ItemList({ category, isShowItemForm, onHandleItemForm }: Props) {
       )}
 
       {isShowItemForm && (
-        <ItemForm show={isShowItemForm} onHide={onHandleItemForm} />
+        <ItemForm show={isShowItemForm} onHide={toggleItemForm} />
       )}
     </main>
   );

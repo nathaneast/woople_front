@@ -8,13 +8,13 @@ import ItemList from '../component/ItemList';
 
 function Home() {
   const [category, setCategory] = useState('all');
-  const [isShowItemForm, onHandleItemForm] = useToggle(false);
+  const [isShowItemForm, toggleItemForm] = useToggle(false);
 
   return (
     <>
-      <Header onHandleItemForm={onHandleItemForm} />
+      <Header toggleItemForm={toggleItemForm} />
       <Category category={category} setCategory={setCategory} />
-      <ItemList category={category} isShowItemForm={isShowItemForm} onHandleItemForm={onHandleItemForm} />
+      <ItemList category={category} isShowItemForm={isShowItemForm} toggleItemForm={toggleItemForm} />
     </>
   );
 }
