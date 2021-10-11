@@ -19,13 +19,13 @@ function ItemForm({ show, onHide }: Props) {
     title: '',
     desc: '',
   });
+  //TODO: metaData State
 
   const [isConfirmUrl, onHandleConfirmUrl] = useToggle(false);
+  
 
   const onHandleChange = useCallback((e) => {
     const { name, value } = e.target;
-
-    console.log(name, value, 'onHandleChange')
     setInputs((prev) => ({
       ...prev,
       [name]: value
@@ -51,6 +51,8 @@ function ItemForm({ show, onHide }: Props) {
       return onErrorProcess('url 검사 버튼을 눌러 주세요');
     }
 
+    // TODO: youtube 포함 여부 검사
+
     const isInputsNullCheck: boolean = [url, author, category, title, desc].every((item: string) => item);
     if (!isInputsNullCheck) {
       return onErrorProcess('빈 값을 모두 입력 해주세요');
@@ -65,9 +67,9 @@ function ItemForm({ show, onHide }: Props) {
     if (!resultErrorMessage) {
       console.log('onCreateSubmit fetch');
     }
-  }, [onCreateValidate])
 
-  console.log(inputs)
+    // TODO: onFetch 요청
+  }, [onCreateValidate])
 
   return (
     <Modal show={show} onHide={onHide} animation={false}>
@@ -79,9 +81,12 @@ function ItemForm({ show, onHide }: Props) {
         <form>
           <div>
             <label>URL</label>
-            <input name="url" type="text" value={inputs.url} onChange={onHandleChange} />
-            <button onClick={onCheckUrlSubmit}>검사</button>
+            <input name="url" type="text" value={inputs.url} onChange={onHandleChange} disabled={isConfirmUrl} />
+            <button onClick={onCheckUrlSubmit} disabled={isConfirmUrl} >검사</button>
           </div>
+
+          {/* Meta Data render */}
+          {isConfirmUrl && <div>Meta Data render</div>}
 
           <div>
             <label>작성자</label>
