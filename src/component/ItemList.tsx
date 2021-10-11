@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 
-// import { useBool } from '../hooks';
+import { useToggle } from '../hooks';
 
 import ItemCard from './ItemCard';
 import ItemDetailCard from './ItemDetailCard';
@@ -79,19 +79,19 @@ function ItemList({ category, isShowItemForm, onHandleItemForm }: Props) {
   const [contentsDetail, setContentsDetail] = useState(contentsDetailDefault);
 
   //TODO: useBoll ts적용
-  const [isShowDetailModal, setIsShowDetailModal] = useState(false);
+  const [isShowDetailModal, toggleDetailModal] = useToggle(false);
 
   const onHandleDetailModal = useCallback(
-    (isOnModal: boolean, contentsKey: number | null) => {
-      setIsShowDetailModal(isOnModal);
+    (contentsKey: number | null) => {
+      toggleDetailModal();
 
-      if (isOnModal && typeof contentsKey === 'number') {
+      if (typeof contentsKey === 'number') {
         setContentsDetail(contentsList[contentsKey]);
       } else {
         setContentsDetail(contentsDetailDefault);
       }
     },
-    [setIsShowDetailModal, contentsList, setContentsDetail, contentsDetailDefault],
+    [toggleDetailModal, contentsList, setContentsDetail, contentsDetailDefault],
   );
 
   // TODO: 아이템리스트 요청

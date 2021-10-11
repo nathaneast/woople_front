@@ -10,7 +10,7 @@ interface Props {
   title: string;
   imagePath: string;
   desc: string;
-  onHide: (isOnModal: boolean, contentsKey: number | null) => void;
+  onHide: (contentsKey: number | null) => void;
 }
 
 // TODO: onClick 함수 변경
@@ -26,7 +26,7 @@ function ItemDetailCard({
   onHide,
 }: Props) {
   return (
-    <Modal show={show} onHide={() => onHide(false, null)} animation={false}>
+    <Modal show={show} onHide={() => onHide(null)} animation={false}>
       <Modal.Header closeButton>
         <Modal.Title>Modal heading</Modal.Title>
       </Modal.Header>

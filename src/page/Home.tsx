@@ -1,15 +1,14 @@
 import { useState } from 'react';
 
-import { useBool } from '../hooks';
+import { useToggle } from '../hooks';
 
 import Category from '../component/Category';
 import Header from '../component/Header';
 import ItemList from '../component/ItemList';
 
-// FIXME: useBool any 타입 변경 
 function Home() {
   const [category, setCategory] = useState('all');
-  const [isShowItemForm, onHandleItemForm] = useBool(false);
+  const [isShowItemForm, onHandleItemForm] = useToggle(false);
 
   return (
     <>

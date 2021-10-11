@@ -5,7 +5,7 @@ interface Props {
   author: string;
   redirectUrl: string;
   imagePath: string;
-  onShowItemDetail: (isOnModal: boolean, contentsKey: number | null) => void;
+  onShowItemDetail: (contentsKey: number | null) => void;
 }
 
 function ItemCard({ index, title, author, desc, imagePath, redirectUrl, onShowItemDetail }: Props) {
@@ -34,7 +34,7 @@ function ItemCard({ index, title, author, desc, imagePath, redirectUrl, onShowIt
       </section>
 
       <section>
-        <button onClick={() => onShowItemDetail(true, index)}>
+        <button onClick={() => onShowItemDetail(index)}>
           상세보기
         </button>
       </section>

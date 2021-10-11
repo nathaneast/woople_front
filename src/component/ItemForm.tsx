@@ -3,7 +3,7 @@ import { useState, useCallback } from 'react';
 import { Button } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 
-import { useBool } from '../hooks';
+import { useToggle } from '../hooks';
 
 
 interface Props {
@@ -20,7 +20,7 @@ function ItemForm({ show, onHide }: Props) {
     desc: '',
   });
 
-  const [isConfirmUrl, onHandleConfirmUrl] = useBool(false);
+  const [isConfirmUrl, onHandleConfirmUrl] = useToggle(false);
 
   const onHandleChange = useCallback((e) => {
     const { name, value } = e.target;
