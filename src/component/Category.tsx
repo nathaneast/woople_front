@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 
-
 interface Props {
   category: string,
   setCategory: (val: string) => void,

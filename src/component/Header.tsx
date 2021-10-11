@@ -1,8 +1,15 @@
-const Header = () => {
+interface Props {
+  onHandleItemForm: any;
+}
+
+const Header = ({ onHandleItemForm }: Props) => {
   return (
     <header>
+      <div>
+        <h1>WOOPLE</h1>
+      </div>
       <ul>
-        <li>글쓰기</li>
+        <li onClick={onHandleItemForm}>글쓰기</li>
       </ul>
     </header>
   );

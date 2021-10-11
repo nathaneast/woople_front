@@ -2,9 +2,9 @@ import { useEffect, useState, useCallback, useMemo } from 'react';
 
 // import { useBool } from '../hooks';
 
-// import ItemDetailCard from './ItemDetailCard';
 import ItemCard from './ItemCard';
 import ItemDetailCard from './ItemDetailCard';
+import ItemForm from './ItemForm';
 
 const itemListMockData: any = [
   {
@@ -58,9 +58,12 @@ interface ItemProps {
 
 interface Props {
   category: string;
+  isShowItemForm: boolean;
+  onHandleItemForm: () => void;
 }
 
-function ItemList({ category }: Props) {
+function ItemList({ category, isShowItemForm, onHandleItemForm }: Props) {
+  // FIXME: 디테일 빈값 대신 상태지정 방법 고려
   const contentsDetailDefault = useMemo(() => ({
       key: 0,
       author: '',
@@ -96,8 +99,6 @@ function ItemList({ category }: Props) {
     setContentsList(itemListMockData);
   }, [category]);
 
-  console.log({ contentsDetail, isShowDetailModal });
-
   return (
     <main>
       {contentsList.length &&
@@ -126,6 +127,10 @@ function ItemList({ category }: Props) {
           category={contentsDetail.category}
           onHide={onHandleDetailModal}
         />
+      )}
+
+      {isShowItemForm && (
+        <ItemForm show={isShowItemForm} onHide={onHandleItemForm} />
       )}
     </main>
   );
