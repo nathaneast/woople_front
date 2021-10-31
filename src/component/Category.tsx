@@ -17,16 +17,14 @@ function Category ({ category, setCategory } : Props) {
   }, [category, setCategory]);
 
   return (
-    <section>
-      <nav>
-        <ul onClick={onClickCategory}>
+      <nav className="mb-3">
+        <ul onClick={onClickCategory} className="flex justify-center gap-x-10">
           <li data-name="all">all</li>
           <li data-name="morning">Morning</li>
           <li data-name="afternoon">Afternoon</li>
           <li data-name="night">Night</li>
         </ul>
       </nav>
-    </section>
   );
 };
 

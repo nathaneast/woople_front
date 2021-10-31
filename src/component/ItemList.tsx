@@ -43,6 +43,18 @@ const itemListMockData: any = [
     imagePath: 'imageUrl',
     desc: 'mock desc',
   },
+  {
+    key: 4,
+    // id: "jonadan@google.com",
+    author: 'jonandan',
+    date: '2021-09-09',
+    category: 'night',
+    // like: 13,
+    redirectUrl: 'https://www.naver.com',
+    title: 'mock title',
+    imagePath: 'imageUrl',
+    desc: 'mock desc',
+  },
 ];
 
 interface ItemProps {
@@ -63,7 +75,8 @@ interface Props {
 }
 
 function ItemList({ category, isShowItemForm, toggleItemForm }: Props) {
-  const contentsDetailDefault = useMemo(() => ({
+  const contentsDetailDefault = useMemo(
+    () => ({
       key: 0,
       author: '',
       date: '',
@@ -72,7 +85,9 @@ function ItemList({ category, isShowItemForm, toggleItemForm }: Props) {
       imagePath: '',
       desc: '',
       category: '',
-    }), []);
+    }),
+    [],
+  );
   const [contentsList, setContentsList] = useState([]);
   const [contentsDetail, setContentsDetail] = useState(contentsDetailDefault);
 
@@ -96,21 +111,25 @@ function ItemList({ category, isShowItemForm, toggleItemForm }: Props) {
     setContentsList(itemListMockData);
   }, [category]);
 
+  console.log({isShowItemForm})
+
   return (
-    <main>
-      {contentsList.length &&
-        contentsList.map((item: ItemProps, index: number) => (
-          <ItemCard
-            key={item.key}
-            index={index}
-            title={item.title}
-            author={item.author}
-            desc={item.desc}
-            onShowItemDetail={onHandleDetailModal}
-            redirectUrl={item.redirectUrl}
-            imagePath={item.imagePath}
-          />
-        ))}
+    <>
+      <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+        {contentsList.length &&
+          contentsList.map((item: ItemProps, index: number) => (
+            <ItemCard
+              key={item.key}
+              index={index}
+              title={item.title}
+              author={item.author}
+              desc={item.desc}
+              onShowItemDetail={onHandleDetailModal}
+              redirectUrl={item.redirectUrl}
+              imagePath={item.imagePath}
+            />
+          ))}
+      </main>
 
       {isShowDetailModal && contentsDetail && (
         <ItemDetailCard
@@ -129,7 +148,7 @@ function ItemList({ category, isShowItemForm, toggleItemForm }: Props) {
       {isShowItemForm && (
         <ItemForm show={isShowItemForm} onHide={toggleItemForm} />
       )}
-    </main>
+    </>
   );
 }
 

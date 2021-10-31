@@ -40,7 +40,7 @@ function ItemForm({ show, onHide }: Props) {
     onHandleConfirmUrl();
   }, [onHandleConfirmUrl]);
 
-  const onCreateValidate = useCallback(() => {
+  const onValidateForm = useCallback(() => {
     const onErrorProcess = (message: string): string => {
       alert(message);
       return message;
@@ -62,14 +62,14 @@ function ItemForm({ show, onHide }: Props) {
   }, [isConfirmUrl, inputs]);
 
   const onCreateSubmit = useCallback(() => {
-    const resultErrorMessage: string = onCreateValidate();
+    const resultErrorMessage: string = onValidateForm();
 
     if (!resultErrorMessage) {
       console.log('onCreateSubmit fetch');
     }
 
     // TODO: onFetch 요청
-  }, [onCreateValidate])
+  }, [onValidateForm])
 
   return (
     <Modal show={show} onHide={onHide} animation={false}>

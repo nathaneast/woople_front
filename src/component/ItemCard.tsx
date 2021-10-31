@@ -8,17 +8,26 @@ interface Props {
   onShowItemDetail: (contentsKey: number | null) => void;
 }
 
-function ItemCard({ index, title, author, desc, imagePath, redirectUrl, onShowItemDetail }: Props) {
+function ItemCard({
+  index,
+  title,
+  author,
+  desc,
+  imagePath,
+  redirectUrl,
+  onShowItemDetail,
+}: Props) {
   return (
-    <article>
-      <section>
-        mock image
+    <article className="flex justify-center flex-col">
+      <div>
         <div
           style={{ width: '200px', height: '200px', backgroundColor: 'green' }}
-        ></div>
-      </section>
+        >
+          mock image
+        </div>
+      </div>
 
-      <section>
+      <div>
         <div>
           <label>타이틀</label>
           <p>{title}</p>
@@ -31,13 +40,11 @@ function ItemCard({ index, title, author, desc, imagePath, redirectUrl, onShowIt
           <label>작성자</label>
           <p>{author}</p>
         </div>
-      </section>
+      </div>
 
-      <section>
-        <button onClick={() => onShowItemDetail(index)}>
-          상세보기
-        </button>
-      </section>
+      <div>
+        <button onClick={() => onShowItemDetail(index)}>상세보기</button>
+      </div>
     </article>
   );
 }
