@@ -24,6 +24,8 @@ function Category({ category, setCategory }: Props) {
         if (category !== targetCategory) {
           setCategory(targetCategory);
         }
+
+        // TODO: onFetch List
       }
     },
     [category, setCategory],

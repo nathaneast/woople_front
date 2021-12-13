@@ -36,12 +36,19 @@ function ItemForm({ show, onHide }: Props) {
   const onCheckUrlSubmit = useCallback(
     (e) => {
       e.preventDefault();
+
       console.log('onCheckUrlSubmit');
 
-      // TODO: 요청 후 체크 로직
+      if (!inputs.url) {
+        alert('url 값을 입력 해주세요');
+        return;
+      }
+
+      // TODO: 요청 -> 성공 res -> 메타데이터 렌더링
+      // err -> alert
       onHandleConfirmUrl();
     },
-    [onHandleConfirmUrl],
+    [onHandleConfirmUrl, inputs.url],
   );
 
   const onValidateForm = useCallback(() => {
@@ -98,9 +105,13 @@ function ItemForm({ show, onHide }: Props) {
               onChange={onHandleChange}
               disabled={isConfirmUrl}
             />
-            <button onClick={onCheckUrlSubmit} disabled={isConfirmUrl}>
+            <Button
+              variant="danger"
+              onClick={onCheckUrlSubmit}
+              disabled={isConfirmUrl}
+            >
               검사
-            </button>
+            </Button>
           </div>
 
           {/* Meta Data render */}

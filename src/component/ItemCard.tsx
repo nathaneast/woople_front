@@ -1,3 +1,13 @@
+import { Button } from 'react-bootstrap';
+import styled from 'styled-components';
+
+const CardSection = styled.section`
+  cursor: pointer;
+  &:hover {
+    border: 2px solid orange;
+  }
+`;
+
 interface Props {
   index: number;
   title: string;
@@ -19,31 +29,37 @@ function ItemCard({
 }: Props) {
   return (
     <article className="flex justify-center flex-col">
-      <div>
-        <div
-          style={{ width: '200px', height: '200px', backgroundColor: 'green' }}
-        >
-          mock image
+      <CardSection onClick={() => onShowItemDetail(index)}>
+        <div>
+          <div
+            style={{
+              width: '200px',
+              height: '200px',
+              backgroundColor: 'green',
+            }}
+          >
+            mock image
+          </div>
         </div>
-      </div>
+
+        <div>
+          <div>
+            <label>타이틀</label>
+            <p>{title}</p>
+          </div>
+          <div>
+            <label>설명</label>
+            <p>{desc}</p>
+          </div>
+          <div>
+            <label>작성자</label>
+            <p>{author}</p>
+          </div>
+        </div>
+      </CardSection>
 
       <div>
-        <div>
-          <label>타이틀</label>
-          <p>{title}</p>
-        </div>
-        <div>
-          <label>설명</label>
-          <p>{desc}</p>
-        </div>
-        <div>
-          <label>작성자</label>
-          <p>{author}</p>
-        </div>
-      </div>
-
-      <div>
-        <button onClick={() => onShowItemDetail(index)}>상세보기</button>
+        <Button onClick={() => console.log('링크 이동')}>링크 이동</Button>
       </div>
     </article>
   );

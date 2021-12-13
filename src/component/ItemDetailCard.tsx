@@ -67,8 +67,14 @@ function ItemDetailCard({
       </Modal.Body>
 
       <Modal.Footer>
+        <Button variant="danger">삭제</Button>
         <Button variant="primary">
-          <a href={redirectUrl} target="_blank" rel="noopner noreferrer" style={{ color: "black"}}>
+          <a
+            href={redirectUrl}
+            target="_blank"
+            rel="noopner noreferrer"
+            style={{ color: 'black' }}
+          >
             링크이동
           </a>
         </Button>
