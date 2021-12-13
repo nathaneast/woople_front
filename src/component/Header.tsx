@@ -22,7 +22,9 @@ const Header = ({ toggleItemForm }: Props) => {
           <NavDropdown.Item onClick={toggleItemForm}>글쓰기</NavDropdown.Item>
         </NavDropdown>
         <ul className="absolute right-3 hidden md:block">
-          <li onClick={toggleItemForm}>글쓰기</li>
+          <li onClick={toggleItemForm} className="cursor-pointer">
+            글쓰기
+          </li>
         </ul>
       </header>
     </>

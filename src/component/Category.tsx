@@ -1,31 +1,52 @@
 import { useCallback } from 'react';
+import styled from 'styled-components';
+
+interface LiItemProps {
+  readonly isFocus: boolean;
+}
+
+const LiItem = styled.li<LiItemProps>`
+  cursor: pointer;
+  color: ${(props) => (props.isFocus ? 'red' : 'black')};
+`;
 
 interface Props {
-  category: string,
-  setCategory: (val: string) => void,
-};
+  category: string;
+  setCategory: (val: string) => void;
+}
 
-function Category ({ category, setCategory } : Props) {
-  const onClickCategory = useCallback((e) => {
-    if (e.target.tagName === 'LI') {
-      const targetCategory = e.target.dataset.name;
+function Category({ category, setCategory }: Props) {
+  const onClickCategory = useCallback(
+    (e) => {
+      if (e.target.tagName === 'LI') {
+        const targetCategory = e.target.dataset.name;
 
-      if (category !== targetCategory) {
-        setCategory(targetCategory);
+        if (category !== targetCategory) {
+          setCategory(targetCategory);
+        }
       }
-    }
-  }, [category, setCategory]);
+    },
+    [category, setCategory],
+  );
 
   return (
-      <nav className="mb-3">
-        <ul onClick={onClickCategory} className="flex justify-center gap-x-10">
-          <li data-name="all">all</li>
-          <li data-name="morning">Morning</li>
-          <li data-name="afternoon">Afternoon</li>
-          <li data-name="night">Night</li>
-        </ul>
-      </nav>
+    <nav className="mb-3">
+      <ul onClick={onClickCategory} className="flex justify-center gap-x-10">
+        <LiItem data-name="all" isFocus={category === 'all'}>
+          all
+        </LiItem>
+        <LiItem data-name="morning" isFocus={category === 'morning'}>
+          Morning
+        </LiItem>
+        <LiItem data-name="afternoon" isFocus={category === 'afternoon'}>
+          Afternoon
+        </LiItem>
+        <LiItem data-name="night" isFocus={category === 'night'}>
+          Night
+        </LiItem>
+      </ul>
+    </nav>
   );
-};
+}
 
 export default Category;

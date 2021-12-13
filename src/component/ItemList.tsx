@@ -111,11 +111,9 @@ function ItemList({ category, isShowItemForm, toggleItemForm }: Props) {
     setContentsList(itemListMockData);
   }, [category]);
 
-  console.log({isShowItemForm})
-
   return (
-    <>
-      <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+    <div className="d-flex justify-center">
+      <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20">
         {contentsList.length &&
           contentsList.map((item: ItemProps, index: number) => (
             <ItemCard
@@ -148,7 +146,7 @@ function ItemList({ category, isShowItemForm, toggleItemForm }: Props) {
       {isShowItemForm && (
         <ItemForm show={isShowItemForm} onHide={toggleItemForm} />
       )}
-    </>
+    </div>
   );
 }
 
