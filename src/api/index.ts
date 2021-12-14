@@ -3,29 +3,18 @@ import axios, { AxiosResponse } from 'axios';
 const instance = axios.create({
   baseURL: '',
   timeout: 15000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 const responseBody = (response: AxiosResponse) => response.data;
 
 const requests = {
-  get: (url: string) => instance.get(url).then(responseBody),
-  post: (url: string, body: object) =>
-    instance.post(url, body).then(responseBody),
-  delete: (url: string) => instance.delete(url).then(responseBody),
+  list: () => instance.get('/posts').then(responseBody),
+  create: () => instance.post(`/post`).then(responseBody),
+  confirmUrl: (urlItem: string) =>
+    instance.post(`/post/url`, urlItem).then(responseBody),
+  detail: (id: string) => instance.get(`/posts/${id}`).then(responseBody),
+  delete: (id: string) => instance.delete(`/posts/${id}`).then(responseBody),
 };
-
-/* 
-apis
-
-GET: posts
-// params: category
-
-GET: post/{id}
-
-POST: post
-POST: post/url
-
-DELETE: post/{id}
-
-
-*/
