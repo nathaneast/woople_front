@@ -17,6 +17,5 @@ const requests = {
     instance.post(`/post/url`, urlItem).then(responseBody),
   detail: (id: string) => instance.get(`/post/${id}`).then(responseBody),
   delete: (id: string) => instance.delete(`/post/${id}`).then(responseBody),
+  like: (id: string) => instance.patch(`/post/like/${id}`).then(responseBody),
 };
-
-// api/ path
