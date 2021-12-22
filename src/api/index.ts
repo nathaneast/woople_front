@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 
 const instance = axios.create({
-  baseURL: '',
+  baseURL: 'http://localhost:3065',
   timeout: 15000,
   headers: {
     'Content-Type': 'application/json',
@@ -10,12 +10,18 @@ const instance = axios.create({
 
 const responseBody = (response: AxiosResponse) => response.data;
 
-const requests = {
+export const requestApi = {
   list: () => instance.get('/posts').then(responseBody),
-  create: () => instance.post(`/post`).then(responseBody),
-  confirmUrl: (urlItem: string) =>
-    instance.post(`/post/url`, urlItem).then(responseBody),
+  create: (body: object) => instance.post('/post', body).then(responseBody),
   detail: (id: string) => instance.get(`/post/${id}`).then(responseBody),
   delete: (id: string) => instance.delete(`/post/${id}`).then(responseBody),
   like: (id: string) => instance.patch(`/post/like/${id}`).then(responseBody),
+  confirmYoutubeUrl: (urlItem: string) =>
+    instance
+      .get(`/post/youtubeUrl`, {
+        params: {
+          urlItem,
+        },
+      })
+      .then(responseBody),
 };

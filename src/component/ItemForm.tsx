@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 
 import { useToggle } from '../hooks';
+import { requestApi } from '../api';
 
 interface Props {
   show: boolean;
@@ -18,9 +19,13 @@ function ItemForm({ show, onHide }: Props) {
     title: '',
     desc: '',
   });
-  //TODO: metaData State
+  const [metaData, setMetaData] = useState({
+    metaTitle: '',
+    metaImage: '',
+    metaDesc: '',
+  });
 
-  const [isConfirmUrl, onHandleConfirmUrl] = useToggle(false);
+  const [isConfirmUrl, toggleConfirmUrl] = useToggle(false);
 
   const onHandleChange = useCallback(
     (e) => {
@@ -37,18 +42,36 @@ function ItemForm({ show, onHide }: Props) {
     (e) => {
       e.preventDefault();
 
-      console.log('onCheckUrlSubmit');
-
       if (!inputs.url) {
         alert('url 값을 입력 해주세요');
         return;
       }
 
-      // TODO: 요청 -> 성공 res -> 메타데이터 렌더링
+      if (inputs.url.search('youtube') === -1) {
+        alert('유튜브 url을 입력 해주세요');
+        return;
+      }
+
+      // TODO: 요청 -> 성공 res ->
+      // 메타데이터  setState, 렌더링
       // err -> alert
-      onHandleConfirmUrl();
+
+      requestApi
+        .confirmYoutubeUrl(inputs.url)
+        .then((res) => {
+          console.log({ res });
+          const { title, description, image } = res;
+          setMetaData({
+            metaTitle: title,
+            metaImage: image,
+            metaDesc: description,
+          });
+        })
+        .catch((err) => console.error(err));
+
+      toggleConfirmUrl();
     },
-    [onHandleConfirmUrl, inputs.url],
+    [toggleConfirmUrl, inputs.url, requestApi, setMetaData],
   );
 
   const onValidateForm = useCallback(() => {
@@ -78,15 +101,34 @@ function ItemForm({ show, onHide }: Props) {
     return '';
   }, [isConfirmUrl, inputs]);
 
+  const onCreateBody = useCallback(() => {
+    const { url, author, category, title: postTitle, desc: postDesc } = inputs;
+    const { metaTitle, metaImage, metaDesc } = metaData;
+
+    return {
+      url,
+      author,
+      category,
+      postTitle,
+      postDesc,
+      metaTitle,
+      metaImage,
+      metaDesc,
+    };
+  }, [inputs, metaData]);
+
   const onCreateSubmit = useCallback(() => {
     const resultErrorMessage: string = onValidateForm();
 
     if (!resultErrorMessage) {
-      console.log('onCreateSubmit fetch');
+      requestApi
+        .create(onCreateBody())
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => console.error(err));
     }
-
-    // TODO: on fetch
-  }, [onValidateForm]);
+  }, [onValidateForm, requestApi, onCreateBody]);
 
   return (
     <Modal show={show} onHide={onHide} animation={false}>
@@ -114,8 +156,19 @@ function ItemForm({ show, onHide }: Props) {
             </Button>
           </div>
 
-          {/* Meta Data render */}
-          {isConfirmUrl && <div>Meta Data render</div>}
+          {isConfirmUrl && (
+            <section>
+              <img src={metaData.metaImage} style={{ width: '200px' }} />
+              <div>
+                <span>타이틀:</span>
+                <p>{metaData.metaTitle}</p>
+              </div>
+              <div>
+                <span>설명:</span>
+                <p>{metaData.metaDesc}</p>
+              </div>
+            </section>
+          )}
 
           <div>
             <label>작성자</label>
