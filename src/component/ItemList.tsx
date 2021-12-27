@@ -1,71 +1,73 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 
 import { useToggle } from '../hooks';
+import { requestApi } from '../api';
 
 import ItemCard from './ItemCard';
 import ItemDetailCard from './ItemDetailCard';
 import ItemForm from './ItemForm';
 
-const itemListMockData: any = [
-  {
-    key: 1,
-    // id: "jonadan@google.com",
-    author: 'jonandan',
-    date: '2021-09-09',
-    category: 'morning',
-    // like: 13,
-    redirectUrl: 'https://www.naver.com',
-    title: 'mock title',
-    imagePath: 'imageUrl',
-    desc: 'mock desc',
-  },
-  {
-    key: 2,
-    // id: "jonadan@google.com",
-    author: 'jonandan',
-    date: '2021-09-09',
-    category: 'morning',
-    // like: 13,
-    redirectUrl: 'https://www.naver.com',
-    title: 'mock title',
-    imagePath: 'imageUrl',
-    desc: 'mock desc',
-  },
-  {
-    key: 3,
-    // id: "jonadan@google.com",
-    author: 'jonandan',
-    date: '2021-09-09',
-    category: 'night',
-    // like: 13,
-    redirectUrl: 'https://www.naver.com',
-    title: 'mock title',
-    imagePath: 'imageUrl',
-    desc: 'mock desc',
-  },
-  {
-    key: 4,
-    // id: "jonadan@google.com",
-    author: 'jonandan',
-    date: '2021-09-09',
-    category: 'night',
-    // like: 13,
-    redirectUrl: 'https://www.naver.com',
-    title: 'mock title',
-    imagePath: 'imageUrl',
-    desc: 'mock desc',
-  },
-];
+// const itemListMockData: any = [
+//   {
+//     key: 1,
+//     // id: "jonadan@google.com",
+//     author: 'jonandan',
+//     date: '2021-09-09',
+//     category: 'morning',
+//     // like: 13,
+//     redirectUrl: 'https://www.naver.com',
+//     title: 'mock title',
+//     imagePath: 'imageUrl',
+//     desc: 'mock desc',
+//   },
+//   {
+//     key: 2,
+//     // id: "jonadan@google.com",
+//     author: 'jonandan',
+//     date: '2021-09-09',
+//     category: 'morning',
+//     // like: 13,
+//     redirectUrl: 'https://www.naver.com',
+//     title: 'mock title',
+//     imagePath: 'imageUrl',
+//     desc: 'mock desc',
+//   },
+//   {
+//     key: 3,
+//     // id: "jonadan@google.com",
+//     author: 'jonandan',
+//     date: '2021-09-09',
+//     category: 'night',
+//     // like: 13,
+//     redirectUrl: 'https://www.naver.com',
+//     title: 'mock title',
+//     imagePath: 'imageUrl',
+//     desc: 'mock desc',
+//   },
+//   {
+//     key: 4,
+//     // id: "jonadan@google.com",
+//     author: 'jonandan',
+//     date: '2021-09-09',
+//     category: 'night',
+//     // like: 13,
+//     redirectUrl: 'https://www.naver.com',
+//     title: 'mock title',
+//     imagePath: 'imageUrl',
+//     desc: 'mock desc',
+//   },
+// ];
 
 interface ItemProps {
   key: number;
   author: string;
   date: string;
-  redirectUrl: string;
-  title: string;
-  imagePath: string;
-  desc: string;
+  url: string;
+  postTitle: string;
+  metaImage: string;
+  postDesc: string;
   category: string;
+  like: number;
 }
 
 interface Props {
@@ -81,9 +83,9 @@ function ItemList({ category, isShowItemForm, toggleItemForm }: Props) {
       author: '',
       date: '',
       redirectUrl: '',
-      title: '',
-      imagePath: '',
-      desc: '',
+      postTitle: '',
+      metaImage: '',
+      postDesc: '',
       category: '',
     }),
     [],
@@ -106,25 +108,37 @@ function ItemList({ category, isShowItemForm, toggleItemForm }: Props) {
     [toggleDetailModal, contentsList, setContentsDetail, contentsDetailDefault],
   );
 
-  // TODO: 아이템리스트 요청
+  const onFetchList = useCallback(() => {
+    requestApi
+      .list(category)
+      .then((res) => {
+        setContentsList(res);
+        console.log(res, 'list');
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [setContentsList, category]);
+
   useEffect(() => {
-    setContentsList(itemListMockData);
+    onFetchList();
   }, [category]);
 
   return (
     <div className="d-flex justify-center">
       <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20">
-        {contentsList.length &&
+        {contentsList.length > 0 &&
           contentsList.map((item: ItemProps, index: number) => (
             <ItemCard
               key={item.key}
               index={index}
-              title={item.title}
+              title={item.postTitle}
               author={item.author}
-              desc={item.desc}
+              desc={item.postDesc}
               onShowItemDetail={onHandleDetailModal}
-              redirectUrl={item.redirectUrl}
-              imagePath={item.imagePath}
+              redirectUrl={item.url}
+              imagePath={item.metaImage}
+              like={item.like}
             />
           ))}
       </main>
@@ -135,9 +149,9 @@ function ItemList({ category, isShowItemForm, toggleItemForm }: Props) {
           author={contentsDetail.author}
           date={contentsDetail.date}
           redirectUrl={contentsDetail.redirectUrl}
-          title={contentsDetail.title}
-          imagePath={contentsDetail.imagePath}
-          desc={contentsDetail.desc}
+          title={contentsDetail.postTitle}
+          imagePath={contentsDetail.metaImage}
+          desc={contentsDetail.postDesc}
           category={contentsDetail.category}
           onHide={onHandleDetailModal}
         />

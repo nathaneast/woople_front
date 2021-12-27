@@ -11,7 +11,14 @@ const instance = axios.create({
 const responseBody = (response: AxiosResponse) => response.data;
 
 export const requestApi = {
-  list: () => instance.get('/posts').then(responseBody),
+  list: (category: string) =>
+    instance
+      .get('/posts', {
+        params: {
+          category,
+        },
+      })
+      .then(responseBody),
   create: (body: object) => instance.post('/post', body).then(responseBody),
   detail: (id: string) => instance.get(`/post/${id}`).then(responseBody),
   delete: (id: string) => instance.delete(`/post/${id}`).then(responseBody),

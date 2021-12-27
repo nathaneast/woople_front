@@ -8,6 +8,11 @@ const CardSection = styled.section`
   }
 `;
 
+const Image = styled.img`
+  width: 250px;
+  height: 250px;
+`;
+
 interface Props {
   index: number;
   title: string;
@@ -15,6 +20,7 @@ interface Props {
   author: string;
   redirectUrl: string;
   imagePath: string;
+  like: number;
   onShowItemDetail: (contentsKey: number | null) => void;
 }
 
@@ -26,40 +32,41 @@ function ItemCard({
   imagePath,
   redirectUrl,
   onShowItemDetail,
+  like,
 }: Props) {
   return (
     <article className="flex justify-center flex-col">
       <CardSection onClick={() => onShowItemDetail(index)}>
         <div>
-          <div
-            style={{
-              width: '200px',
-              height: '200px',
-              backgroundColor: 'green',
-            }}
-          >
-            mock image
-          </div>
+          <Image src={imagePath} />
         </div>
 
         <div>
-          <div>
-            <label>타이틀</label>
+          <div className="d-flex">
+            <label className="mr-2">타이틀</label>
             <p>{title}</p>
           </div>
-          <div>
-            <label>설명</label>
+          <div className="d-flex">
+            <label className="mr-2">설명</label>
             <p>{desc}</p>
           </div>
-          <div>
-            <label>작성자</label>
+          <div className="d-flex">
+            <label className="mr-2">작성자</label>
             <p>{author}</p>
+          </div>
+          <div className="d-flex">
+            <label className="mr-2">좋아요</label>
+            <p>{like}</p>
           </div>
         </div>
       </CardSection>
 
       <div>
-        <Button onClick={() => console.log('링크 이동')}>링크 이동</Button>
+        <Button>
+          <a href={redirectUrl} target="_blank" rel="noopener noreferrer">
+            링크 이동
+          </a>
+        </Button>
       </div>
     </article>
   );

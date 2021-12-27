@@ -38,7 +38,7 @@ function ItemForm({ show, onHide }: Props) {
     [setInputs],
   );
 
-  const onCheckUrlSubmit = useCallback(
+  const onCheckYoutubeUrlSubmit = useCallback(
     (e) => {
       e.preventDefault();
 
@@ -66,10 +66,12 @@ function ItemForm({ show, onHide }: Props) {
             metaImage: image,
             metaDesc: description,
           });
+          toggleConfirmUrl();
         })
-        .catch((err) => console.error(err));
-
-      toggleConfirmUrl();
+        .catch((err) => {
+          console.error(err, err.response);
+          alert(err.response.data);
+        });
     },
     [toggleConfirmUrl, inputs.url, requestApi, setMetaData],
   );
@@ -125,10 +127,14 @@ function ItemForm({ show, onHide }: Props) {
         .create(onCreateBody())
         .then((res) => {
           console.log(res);
+          alert('게시글 작성이 완료 되었습니다');
+          onHide();
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          console.error(err);
+        });
     }
-  }, [onValidateForm, requestApi, onCreateBody]);
+  }, [onValidateForm, requestApi, onCreateBody, onHide]);
 
   return (
     <Modal show={show} onHide={onHide} animation={false}>
@@ -149,7 +155,7 @@ function ItemForm({ show, onHide }: Props) {
             />
             <Button
               variant="danger"
-              onClick={onCheckUrlSubmit}
+              onClick={onCheckYoutubeUrlSubmit}
               disabled={isConfirmUrl}
             >
               검사
