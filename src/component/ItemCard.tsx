@@ -18,7 +18,7 @@ interface Props {
   title: string;
   desc: string;
   author: string;
-  redirectUrl: string;
+  url: string;
   imagePath: string;
   like: number;
   onShowItemDetail: (contentsKey: number | null) => void;
@@ -30,7 +30,7 @@ function ItemCard({
   author,
   desc,
   imagePath,
-  redirectUrl,
+  url,
   onShowItemDetail,
   like,
 }: Props) {
@@ -63,7 +63,7 @@ function ItemCard({
 
       <div>
         <Button>
-          <a href={redirectUrl} target="_blank" rel="noopener noreferrer">
+          <a href={url} target="_blank" rel="noopener noreferrer">
             링크 이동
           </a>
         </Button>

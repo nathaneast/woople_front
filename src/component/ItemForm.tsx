@@ -9,9 +9,10 @@ import { requestApi } from '../api';
 interface Props {
   show: boolean;
   onHide: () => void;
+  onListReRender: () => void;
 }
 
-function ItemForm({ show, onHide }: Props) {
+function ItemForm({ show, onHide, onListReRender }: Props) {
   const [inputs, setInputs] = useState({
     url: '',
     author: '',
@@ -128,13 +129,14 @@ function ItemForm({ show, onHide }: Props) {
         .then((res) => {
           console.log(res);
           alert('게시글 작성이 완료 되었습니다');
+          onListReRender();
           onHide();
         })
         .catch((err) => {
           console.error(err);
         });
     }
-  }, [onValidateForm, requestApi, onCreateBody, onHide]);
+  }, [onValidateForm, requestApi, onCreateBody, onHide, onListReRender]);
 
   return (
     <Modal show={show} onHide={onHide} animation={false}>
@@ -149,6 +151,7 @@ function ItemForm({ show, onHide }: Props) {
             <input
               name="url"
               type="text"
+              placeholder="유튜브 url만 입력 가능"
               value={inputs.url}
               onChange={onHandleChange}
               disabled={isConfirmUrl}
