@@ -109,6 +109,8 @@ function ItemList({ category, isShowItemForm, toggleItemForm }: Props) {
           like={contentsDetail.like}
           category={contentsDetail.category.name}
           onHide={onHandleDetailModal}
+          setContentsList={setContentsList}
+          setContentsDetail={setContentsDetail}
         />
       )}
 

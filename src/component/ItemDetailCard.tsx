@@ -1,8 +1,10 @@
 import { useCallback } from 'react';
 import { Button } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
+import produce from 'immer';
 
 import { useToggle } from '../hooks';
+import { requestApi } from '../api';
 
 interface Props {
   show: boolean;
@@ -18,6 +20,8 @@ interface Props {
   like: number;
   id: string;
   onHide: (contentsKey: number | null) => void;
+  setContentsList: (prevList: any) => void;
+  setContentsDetail: (prev: any) => void;
 }
 
 // TODO: onClick 함수 변경
@@ -35,13 +39,38 @@ function ItemDetailCard({
   like,
   id,
   onHide,
+  setContentsList,
+  setContentsDetail,
 }: Props) {
   const [isPushedLike, onHandlePushedLike] = useToggle(false);
 
   const onClickLike = useCallback(() => {
-    //TODO: feth Like id
-    onHandlePushedLike();
-  }, [onHandlePushedLike]);
+    requestApi
+      .like(id)
+      .then((res) => {
+        setContentsList((prevList: any) => {
+          const targetIndex = prevList.findIndex(
+            (item: any) => item._id === id,
+          );
+          const updatedContesList = produce(prevList, (draft: any) => {
+            ++draft[targetIndex].like;
+          });
+          return updatedContesList;
+        });
+
+        setContentsDetail((prev: any) => {
+          const updatedDetail = produce(prev, (draft: any) => {
+            ++draft.like;
+          });
+          return updatedDetail;
+        });
+
+        onHandlePushedLike();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [setContentsDetail, onHandlePushedLike, setContentsList]);
 
   return (
     <Modal show={show} onHide={() => onHide(null)} animation={false}>
@@ -100,7 +129,7 @@ function ItemDetailCard({
       </Modal.Body>
 
       <Modal.Footer>
-        <Button variant="success" onClick={onClickLike}>
+        <Button variant="success" disabled={isPushedLike} onClick={onClickLike}>
           좋아요
         </Button>
         <Button variant="danger">삭제</Button>

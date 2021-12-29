@@ -20,7 +20,6 @@ export const requestApi = {
       })
       .then(responseBody),
   create: (body: object) => instance.post('/post', body).then(responseBody),
-  detail: (id: string) => instance.get(`/post/${id}`).then(responseBody),
   delete: (id: string) => instance.delete(`/post/${id}`).then(responseBody),
   like: (id: string) => instance.patch(`/post/like/${id}`).then(responseBody),
   confirmYoutubeUrl: (urlItem: string) =>
