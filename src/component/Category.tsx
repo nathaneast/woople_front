@@ -7,7 +7,9 @@ interface LiItemProps {
 
 const LiItem = styled.li<LiItemProps>`
   cursor: pointer;
-  color: ${(props) => (props.isFocus ? 'red' : 'black')};
+  color: ${(props) => (props.isFocus ? 'orange' : 'black')};
+  font-weight: ${(props) => (props.isFocus ? 'bolder' : '')};
+  font-size: 18px;
 `;
 
 interface Props {
@@ -32,10 +34,10 @@ function Category({ category, setCategory }: Props) {
   );
 
   return (
-    <nav className="mb-3">
+    <nav className="mb-4">
       <ul onClick={onClickCategory} className="flex justify-center gap-x-10">
         <LiItem data-name="all" isFocus={category === 'all'}>
-          all
+          All
         </LiItem>
         <LiItem data-name="morning" isFocus={category === 'morning'}>
           Morning

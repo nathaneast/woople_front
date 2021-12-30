@@ -44,6 +44,24 @@ function ItemDetailCard({
 }: Props) {
   const [isPushedLike, onHandlePushedLike] = useToggle(false);
 
+  const onClickDelete = useCallback(() => {
+    if (window.confirm('정말 삭제하시겠습니까?')) {
+      requestApi
+        .delete(id)
+        .then((res) => {
+          console.log(res);
+          setContentsList((prevList: any) =>
+            prevList.filter((item: any) => item._id !== id),
+          );
+          alert('삭제를 완료 하였습니다');
+          onHide(null);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [requestApi, id, setContentsList, onHide]);
+
   const onClickLike = useCallback(() => {
     requestApi
       .like(id)
@@ -75,55 +93,56 @@ function ItemDetailCard({
   return (
     <Modal show={show} onHide={() => onHide(null)} animation={false}>
       <Modal.Header closeButton>
-        <Modal.Title>Modal heading</Modal.Title>
+        <Modal.Title>상세보기</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
-        <div>
-          <img
-            src={metaImage}
-            style={{
-              width: '150px',
-              height: '150px',
-            }}
-          />
-        </div>
+        <section className="grid-container grid grid-cols-5 mb-2">
+          <span className="font-bold col-span-1">이미지:</span>
+          <img src={metaImage} className="mb-2 col-span-3 w-100 h-100" />
+        </section>
 
         <section>
-          <div className="d-flex">
-            <label className="mr-2">메타 타이틀</label>
-            <p>{metaTitle}</p>
+          <div
+            className="grid-container grid grid-cols-5 mb-2"
+            style={{ color: 'gray' }}
+          >
+            <label className="font-bold mr-1 col-span-1">메타 타이틀</label>
+            <p className="col-span-4">{metaTitle.substring(0, 80)}...</p>
           </div>
-          <div className="d-flex">
-            <label className="mr-2">메타 설명</label>
-            <p>{metaDesc.substring(0, 100)}...</p>
+          <div
+            className="grid-container grid grid-cols-5 mb-2"
+            style={{ color: 'gray' }}
+          >
+            <label className="font-bold mr-1 col-span-1">메타 설명</label>
+            <p className="col-span-4">{metaDesc.substring(0, 80)}...</p>
           </div>
         </section>
 
         <section>
-          <div className="d-flex">
-            <label className="mr-2">타이틀</label>
-            <p>{postTitle}</p>
+          <div className="grid-container grid grid-cols-5">
+            <label className="font-bold mr-1 col-span-1">타이틀</label>
+            <p className="col-span-4">{postTitle}</p>
           </div>
-          <div className="d-flex">
-            <label className="mr-2">작성자</label>
-            <p>{author}</p>
+          <div className="grid-container grid grid-cols-5">
+            <label className="font-bold mr-1 col-span-1">설명</label>
+            <p className="col-span-4">{postDesc}</p>
           </div>
-          <div className="d-flex">
-            <label className="mr-2">카테고리</label>
-            <p>{category}</p>
+          <div className="grid-container grid grid-cols-5">
+            <label className="font-bold mr-1 col-span-1">작성자</label>
+            <p className="col-span-4">{author}</p>
           </div>
-          <div className="d-flex">
-            <label className="mr-2">날짜</label>
-            <p>{createdAt}</p>
+          <div className="grid-container grid grid-cols-5">
+            <label className="font-bold mr-1 col-span-1">카테고리</label>
+            <p className="col-span-4">{category}</p>
           </div>
-          <div className="d-flex">
-            <label className="mr-2">설명</label>
-            <p>{postDesc}</p>
+          <div className="grid-container grid grid-cols-5">
+            <label className="font-bold mr-1 col-span-1">날짜</label>
+            <p className="col-span-4">{createdAt}</p>
           </div>
-          <div className="d-flex">
-            <label className="mr-2">좋아요</label>
-            <p>{like}</p>
+          <div className="grid-container grid grid-cols-5">
+            <label className="font-bold mr-1 col-span-1">좋아요</label>
+            <p className="col-span-4">{like}</p>
           </div>
         </section>
       </Modal.Body>
@@ -132,7 +151,9 @@ function ItemDetailCard({
         <Button variant="success" disabled={isPushedLike} onClick={onClickLike}>
           좋아요
         </Button>
-        <Button variant="danger">삭제</Button>
+        <Button variant="danger" onClick={onClickDelete}>
+          삭제
+        </Button>
         <Button variant="primary">
           <a
             href={url}

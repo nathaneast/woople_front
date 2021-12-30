@@ -7,6 +7,7 @@ import { ContentsDetailType } from '../service/types';
 import ItemCard from './ItemCard';
 import ItemDetailCard from './ItemDetailCard';
 import ItemForm from './ItemForm';
+import Loader from '../component/Loader';
 
 interface Props {
   category: string;
@@ -72,13 +73,16 @@ function ItemList({ category, isShowItemForm, toggleItemForm }: Props) {
     onFetchList();
   }, [category]);
 
+  // FIXME: 로딩, list 중복 렌더 로직 가독성 좋게 변경
   return (
     <div className="d-flex justify-center">
-      <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20">
-        {isLoading ? (
-          <div>Loading</div>
-        ) : (
-          contentsList.map((item: ContentsDetailType, index: number) => (
+      {isLoading ? (
+        <article className="mt-5">
+          <Loader />
+        </article>
+      ) : contentsList.length > 0 ? (
+        <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-20">
+          {contentsList.map((item: ContentsDetailType, index: number) => (
             <ItemCard
               key={item._id}
               index={index}
@@ -90,9 +94,13 @@ function ItemList({ category, isShowItemForm, toggleItemForm }: Props) {
               imagePath={item.metaImage}
               like={item.like}
             />
-          ))
-        )}
-      </main>
+          ))}
+        </main>
+      ) : (
+        <div className="mt-5 text-lg">
+          <p>해당 카테고리 컨텐츠가 없습니다 😢</p>
+        </div>
+      )}
 
       {isShowDetailModal && contentsDetail && (
         <ItemDetailCard

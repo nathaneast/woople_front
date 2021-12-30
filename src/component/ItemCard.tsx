@@ -1,10 +1,10 @@
-import { Button } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
 import styled from 'styled-components';
 
-const CardSection = styled.section`
+const CardWrapper = styled(Card)`
   cursor: pointer;
   &:hover {
-    border: 2px solid orange;
+    border: 3px solid orange;
   }
 `;
 
@@ -35,40 +35,39 @@ function ItemCard({
   like,
 }: Props) {
   return (
-    <article className="flex justify-center flex-col">
-      <CardSection onClick={() => onShowItemDetail(index)}>
-        <div>
-          <Image src={imagePath} />
-        </div>
+    <CardWrapper
+      className="flex justify-center flex-col "
+      style={{ width: '300px' }}
+      onClick={() => onShowItemDetail(index)}
+    >
+      <Card.Img variant="top" src={imagePath} />
 
-        <div>
-          <div className="d-flex">
-            <label className="mr-2">타이틀</label>
-            <p>{title}</p>
-          </div>
-          <div className="d-flex">
-            <label className="mr-2">설명</label>
+      <Card.Body>
+        <Card.Title>{title}</Card.Title>
+        <Card.Text>
+          <div className="flex">
+            <label className="font-bold mr-2">설명</label>
             <p>{desc}</p>
           </div>
-          <div className="d-flex">
-            <label className="mr-2">작성자</label>
+          <div className="flex">
+            <label className="font-bold mr-2">작성자</label>
             <p>{author}</p>
           </div>
-          <div className="d-flex">
-            <label className="mr-2">좋아요</label>
+          <div className="flex">
+            <label className="font-bold mr-2">좋아요</label>
             <p>{like}</p>
           </div>
-        </div>
-      </CardSection>
+        </Card.Text>
 
-      <div>
-        <Button>
-          <a href={url} target="_blank" rel="noopener noreferrer">
-            링크 이동
-          </a>
-        </Button>
-      </div>
-    </article>
+        <div className="flex justify-center flex-col">
+          <Button>
+            <a href={url} target="_blank" rel="noopener noreferrer">
+              링크 이동
+            </a>
+          </Button>
+        </div>
+      </Card.Body>
+    </CardWrapper>
   );
 }
 

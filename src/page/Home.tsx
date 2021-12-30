@@ -11,9 +11,13 @@ function Home() {
 
   return (
     <>
-      <Header toggleItemForm={toggleItemForm}  />
+      <Header toggleItemForm={toggleItemForm} />
       <Category category={category} setCategory={setCategory} />
-      <ItemList category={category} isShowItemForm={isShowItemForm} toggleItemForm={toggleItemForm} />
+      <ItemList
+        category={category}
+        isShowItemForm={isShowItemForm}
+        toggleItemForm={toggleItemForm}
+      />
     </>
   );
 }

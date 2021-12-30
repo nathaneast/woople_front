@@ -88,8 +88,6 @@ function ItemForm({ show, onHide, onListReRender }: Props) {
       return onErrorProcess('url 검사 버튼을 눌러 주세요');
     }
 
-    // TODO: youtube 포함 여부 검사
-
     const isInputsNullCheck: boolean = [
       url,
       author,
@@ -97,6 +95,7 @@ function ItemForm({ show, onHide, onListReRender }: Props) {
       title,
       desc,
     ].every((item: string) => item);
+
     if (!isInputsNullCheck) {
       return onErrorProcess('빈 값을 모두 입력 해주세요');
     }
@@ -141,16 +140,17 @@ function ItemForm({ show, onHide, onListReRender }: Props) {
   return (
     <Modal show={show} onHide={onHide} animation={false}>
       <Modal.Header closeButton>
-        <Modal.Title>Form</Modal.Title>
+        <Modal.Title>글 작성 </Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
         <form>
-          <div>
-            <label>URL</label>
+          <div className="grid-container grid grid-cols-5 mb-2">
+            <label className="font-bold col-span-1">URL</label>
             <input
               name="url"
               type="text"
+              className="col-span-3 rounded-md"
               placeholder="유튜브 url만 입력 가능"
               value={inputs.url}
               onChange={onHandleChange}
@@ -158,6 +158,7 @@ function ItemForm({ show, onHide, onListReRender }: Props) {
             />
             <Button
               variant="danger"
+              className="col-span-1"
               onClick={onCheckYoutubeUrlSubmit}
               disabled={isConfirmUrl}
             >
@@ -167,41 +168,63 @@ function ItemForm({ show, onHide, onListReRender }: Props) {
 
           {isConfirmUrl && (
             <section>
-              <img src={metaData.metaImage} style={{ width: '200px' }} />
-              <div>
-                <span>타이틀:</span>
-                <p>{metaData.metaTitle}</p>
+              <div className="grid-container grid grid-cols-5 mb-2">
+                <span className="font-bold col-span-1">이미지:</span>
+                <img
+                  src={metaData.metaImage}
+                  className="mb-2 col-span-3 w-100"
+                />
               </div>
-              <div>
-                <span>설명:</span>
-                <p>{metaData.metaDesc}</p>
+              <div
+                className="grid-container grid grid-cols-5 mb-2"
+                style={{ color: 'gray' }}
+              >
+                <span className="font-bold col-span-1">타이틀:</span>
+                <p className="col-span-3">
+                  {metaData.metaTitle.substring(0, 80)}...
+                </p>
+              </div>
+              <div
+                className="grid-container grid grid-cols-5 mb-2"
+                style={{ color: 'gray' }}
+              >
+                <span className="font-bold col-span-1">설명:</span>
+                <p className="col-span-3">
+                  {metaData.metaDesc.substring(0, 80)}...
+                </p>
               </div>
             </section>
           )}
 
-          <div>
-            <label>작성자</label>
+          <div className="grid-container grid grid-cols-5 mb-2">
+            <label className="font-bold col-span-1">작성자</label>
             <input
               type="text"
               name="author"
+              className="col-span-3 rounded-md"
               value={inputs.author}
               onChange={onHandleChange}
             />
           </div>
 
-          <div>
-            <label>제목</label>
+          <div className="grid-container grid grid-cols-5 mb-2">
+            <label className="font-bold col-span-1">제목</label>
             <input
               type="text"
               name="title"
+              className="col-span-3 rounded-md"
               value={inputs.title}
               onChange={onHandleChange}
             />
           </div>
 
-          <div>
-            <label>카테고리</label>
-            <select name="category" onChange={onHandleChange}>
+          <div className="grid-container grid grid-cols-5 mb-2">
+            <label className="font-bold col-span-1">카테고리</label>
+            <select
+              name="category"
+              className="rounded-md"
+              onChange={onHandleChange}
+            >
               <option value="">선택</option>
               <option value="morning">morning</option>
               <option value="afternoon">afternoon</option>
@@ -209,11 +232,12 @@ function ItemForm({ show, onHide, onListReRender }: Props) {
             </select>
           </div>
 
-          <div>
-            <label>설명</label>
-            <input
-              type="text"
+          <div className="grid-container grid grid-cols-5 mb-2">
+            <label className="font-bold col-span-1">설명</label>
+            <textarea
+              // type="text"
               name="desc"
+              className="col-span-3 rounded-md"
               value={inputs.desc}
               onChange={onHandleChange}
             />
