@@ -8,10 +8,6 @@ const CardWrapper = styled(Card)`
   }
 `;
 
-const Image = styled.img`
-  width: 250px;
-  height: 250px;
-`;
 
 interface Props {
   index: number;

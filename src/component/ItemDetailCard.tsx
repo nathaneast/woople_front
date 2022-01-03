@@ -60,7 +60,7 @@ function ItemDetailCard({
           console.error(error);
         });
     }
-  }, [requestApi, id, setContentsList, onHide]);
+  }, [requestApi, id, setContentsList, onHide, requestApi]);
 
   const onClickLike = useCallback(() => {
     requestApi
@@ -88,7 +88,7 @@ function ItemDetailCard({
       .catch((error) => {
         console.error(error);
       });
-  }, [setContentsDetail, onHandlePushedLike, setContentsList]);
+  }, [setContentsDetail, onHandlePushedLike, setContentsList, id]);
 
   return (
     <Modal show={show} onHide={() => onHide(null)} animation={false}>
@@ -99,7 +99,11 @@ function ItemDetailCard({
       <Modal.Body>
         <section className="grid-container grid grid-cols-5 mb-2">
           <span className="font-bold col-span-1">이미지:</span>
-          <img src={metaImage} className="mb-2 col-span-3 w-100 h-100" />
+          <img
+            src={metaImage}
+            alt="cardImage"
+            className="mb-2 col-span-3 w-100 h-100"
+          />
         </section>
 
         <section>

@@ -172,6 +172,7 @@ function ItemForm({ show, onHide, onListReRender }: Props) {
                 <span className="font-bold col-span-1">이미지:</span>
                 <img
                   src={metaData.metaImage}
+                  alt="metaCardImage"
                   className="mb-2 col-span-3 w-100"
                 />
               </div>
